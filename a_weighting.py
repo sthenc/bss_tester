@@ -40,25 +40,30 @@ points = np.array([ \
     
 # get x and y vectors
 x = points[:,0]
-y = [ math.exp(tmpy / 20) for tmpy in points[:,1] ]
+y = [ 10**(tmpy / 20) for tmpy in points[:,1] ]
+#y = points[:,1] # for mel variant
 
 #popt, pcov = opt.curve_fit(func, x, y, [1,1,1]) 
  
 #f = (lambda x: func(x, *popt) )
 # calculate polynomial
+#z = np.polyfit(x, y, 6)
 z = np.polyfit(x, y, 6)
 f2 = np.poly1d(z)
 
+def f_log(x):
+	return [20*math.log10(f2(i)) for i in x]
+
 def itu_r_468_amplitude_weight():
-    return f2
+    return f_log
 
 if __name__ == "__main__":
 
-    f2 = itu_r_468_amplitude_weight()
+    f_log = itu_r_468_amplitude_weight()
     # calculate new x's and y's
-    x_new = np.linspace(x[0], x[-1], 32000)
+    x_new = np.linspace(x[0] + 0.01, x[-1], 32000)
     #y_new = f(x_new)
-    y2_new = f2(x_new)
+    y2_new = f_log(x_new)
     #plt.plot(x,y,'o', x_new, y_new, x_new, y2_new)
     plt.plot(x,y,'o', x_new, y2_new)
     plt.xlim([x[0]-1, x[-1] + 1 ])

@@ -216,8 +216,36 @@ class Signal:
 	#
 	#	step = self._nfft - self._overlap
 		
-	#def iSTFT(self):
-	#	"""Compute iSTFT of the signal in S and store into s"""
+	def iSTFT(self):
+		"""Compute iSTFT of the signal in S and store into s"""
+		
+		self.recomputeWeights()
+
+		step = self.nfft - self.overlap
+		pos = 0
+		self.nFrames = m.ceil(self.sLength / step)
+		
+		
+		self._S = np.ndarray([self.nfft, self.nFrames, self.nChans], (np.complex64 if self._precision == 32 else np.complex128) ) 
+		
+		self._S = np.asfortranarray(self._S)
+
+
+		print(self.nChans)
+
+		for f in range(0, self.nFrames):
+			for c in range(0, self.nChans):
+				
+				#print (f, c)
+				tmp = self.s[f * step : f * step + self.nfft, c] 		
+				
+				if len(tmp) < self.nfft:							# append zeros for last frame if needed
+					tmp = np.append(tmp, [0] * (self.nfft - len(tmp)))
+					#print(42, len(tmp))
+				
+				#print(len(tmp))
+				tmpf = sf.fft(tmp * self.weightingWindow)
+				self._S[:, f, c] = tmpf
 		
 		
 		

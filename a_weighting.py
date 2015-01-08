@@ -38,7 +38,7 @@ points = np.array([ \
 #d_konst = 256000.0
 #def func(x, a, b, c):
 #    return c * abs((x/d_konst + 0j) ** a) * abs((1 - x/d_konst + 0j) ** b); # beta distribution curve
-    
+	
 # get x and y vectors
 x = points[:,0]
 y = [ 10**(tmpy / 20) for tmpy in points[:,1] ]
@@ -52,7 +52,8 @@ y = [ 10**(tmpy / 20) for tmpy in points[:,1] ]
 #z = np.polyfit(x, y, 3)
 #f2 = np.poly1d(z)
 
-f2 = Rbf(x, y, smooth=0.002)
+# best so far smooth = 0.003, epsilon=default
+f2 = Rbf(x, y, smooth=0.3, epsilon=1500)
 
 def f_log(x):
 	
@@ -65,24 +66,25 @@ def f_log(x):
 	#		tmp = math.log10(f2(x[i]))
 	#	except ValueError:
 	#		print(i, " ", f2(x[i]))
-    #
+	#
 	#print("\n")
 	#
 	#return []
-	return [math.log10(20*f2(i)) for i in x]
+	return [20*math.log10(f2(i)) for i in x]
 
 def itu_r_468_amplitude_weight():
-    return f_log
+	return f_log
 
 if __name__ == "__main__":
 
-    f_log = itu_r_468_amplitude_weight()
-    # calculate new x's and y's
-    x_new = np.linspace(x[0] + 0.01, x[-1], 32000)
-    #y_new = f(x_new)
-    y2_new = f_log(x_new) # f_log(x_new)
-    #plt.plot(x,y,'o', x_new, y_new, x_new, y2_new)
-    plt.plot(x,[20*math.log10(t) for t in y],'o', x_new, y2_new)
-    plt.xlim([x[0]-1, x[-1] + 1 ])
-    plt.show()
-    
+	f_log = itu_r_468_amplitude_weight()
+	# calculate new x's and y's
+	x_new = np.linspace(x[0], x[-1], 32000)
+	#y_new = f(x_new)
+	y2_new = f_log(x_new) # f_log(x_new)
+	plt.plot(x,y,'o', x_new, f2(x_new))
+	#plt.plot(x,[20*math.log10(t) for t in y],'o', x_new, y2_new)
+	
+	plt.xlim([x[0]-1, x[-1] + 1 ])
+	plt.show()
+	

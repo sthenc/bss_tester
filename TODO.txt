@@ -1,6 +1,6 @@
 DONE:
 
-A weighting function
+A weighting function - now really done
 
 IN PROGRESS
 

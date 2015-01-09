@@ -1,16 +1,17 @@
 DONE:
 
 A weighting function - now really done
+compute something like a spectrogram from a wav file
+
+apply a_weighting to spectrograms
 
 IN PROGRESS
 
-compute something like a spectrogram from a wav file
-
 TODO:
 
-Recreate WAV file from spectrogram
-
 detect speech intervals 
+
+compute gain values
 
 amplify speech and noise to a standardized amplitude (actually not important because in ASR it will be normalized)
 - should avoid or intentionally radnomize this to train the network to be robust to signal level differences
@@ -26,3 +27,6 @@ NOTE:
 
 brutal idea - mine speech samples from online audio books, and automatically
 generate short audio segments with approximate transcripts 
+
+once done, try out currennt
+

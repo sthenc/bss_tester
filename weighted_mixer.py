@@ -61,9 +61,13 @@ def show_spectrogram(y, sr, n_fft, nmels, hopl):
 	
 	log_S = lbr.logamplitude(S, ref_power=np.max)
 	
+	lbr.display.specshow(log_S, sr=sr, hop_length=64, x_axis='time', y_axis='mel')
 	
+	plt.title('mel power spectrogram')
 	
-	time.sleep(3)
+	plt.tight_layout()
+	
+	plt.show()
 
 if __name__ == "__main__":	
 	snr = -3
@@ -76,6 +80,8 @@ if __name__ == "__main__":
 	
 	y_out = weighted_mixer(y1, y2, sr, nmels, hopl)
 	
+	show_spectrogram(y1, sr, 2048, nmels, hopl)
+	show_spectrogram(y2, sr, 2048, nmels, hopl)
 	show_spectrogram(y_out, sr, 2048, nmels, hopl)
 	print (y_out)
 	lbr.output.write_wav('output.wav', y_out, sr, normalize=True) # hm...

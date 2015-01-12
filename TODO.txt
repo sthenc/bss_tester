@@ -9,7 +9,7 @@ detect speech intervals
 
 IN PROGRESS
 
-numpy.average
+need to filter the signal in time domain, or before log operation
 
 compute gain values for targeted SNR
  - only take into account the frames which contain speech

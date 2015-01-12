@@ -8,6 +8,8 @@ import time
 
 from a_weighting2 import itu_r_468_amplitude_weight
 
+from A_weighting import A_weighting
+
 from detect_speech import detect_speech
 
 

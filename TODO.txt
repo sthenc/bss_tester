@@ -5,9 +5,9 @@ compute something like a spectrogram from a wav file
 
 apply a_weighting to spectrograms
 
-IN PROGRESS
-
 detect speech intervals 
+
+IN PROGRESS
 
 TODO:
 

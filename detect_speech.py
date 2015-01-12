@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import math
 
 # works only on very clean speech like audiobooks
+# returns list of tuples (#begining window, #ending window)
 def detect_speech(y, sr, window=-1): # window = mel_bins /2 because of 50% overlap
 
 	#segment signal into frames of approx 10 ms
@@ -67,15 +68,15 @@ def detect_speech(y, sr, window=-1): # window = mel_bins /2 because of 50% overl
 		else:
 			if brojac == 1:		
 				end = i
-				tmp = (start*1.0/N, end*1.0/N)
+				tmp = (start*1.0, end*1.0)
 				intervals.append(tmp)
 				brojac = 0
 			
 	return intervals
 
 if __name__ == "__main__":		
-	#y1, sr = lbr.load('speech.wav', 16000)
-	y1, sr = lbr.load('speech_long.wav', 16000)
+	y1, sr = lbr.load('speech.wav', 16000)
+	#y1, sr = lbr.load('speech_long.wav', 16000)
 	#y1, sr = lbr.load('speech_bad2.wav', 16000)
 	
 	intervals = detect_speech(y1, sr, 64)
@@ -93,7 +94,7 @@ if __name__ == "__main__":
 	lbr.display.specshow(log_S1, sr=sr, hop_length=64, x_axis='time', y_axis='mel')
 	
 	for i in intervals:
-		plt.axhspan(0, 5, i[0], i[1], color='green')
+		plt.axhspan(0, 5, i[0]*64.0/len(y1), i[1]*64.0/len(y1), color='green')
 	
 	plt.subplot(212)
 	

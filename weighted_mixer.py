@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 import time
 
-from a_weighting import itu_r_468_amplitude_weight
+from a_weighting2 import itu_r_468_amplitude_weight
 
 from detect_speech import detect_speech
 
@@ -47,6 +47,8 @@ def weighted_mixer(y1, y2, sr, nmels, hopl):
 	log_S1 = lbr.logamplitude(S1, ref_power=np.max) + log_aw[:, np.newaxis]
 	log_S2 = lbr.logamplitude(S2, ref_power=np.max) + log_aw[:, np.newaxis]
 
+	log_SA1 = np.average(log_S1, axis=2, )
+
 	gain = 0.5
 	
 	len_ret = min(len(y1), len(y2))
@@ -84,7 +86,7 @@ if __name__ == "__main__":
 	show_spectrogram(y2, sr, 2048, nmels, hopl)
 	show_spectrogram(y_out, sr, 2048, nmels, hopl)
 	print (y_out)
-	lbr.output.write_wav('output.wav', y_out, sr, normalize=True) # hm...
+	lbr.output.write_wav('output.wav', y_out, sr, normalize=True) # hm ... normalization || !normalization ?
 	
 	
 	##lbr.display.specshow(log_S1, sr=sr, hop_length=64, x_axis='time', y_axis='mel')

@@ -9,6 +9,8 @@ detect speech intervals
 
 IN PROGRESS
 
+numpy.average
+
 compute gain values for targeted SNR
  - only take into account the frames which contain speech
  - compute the average amplitude of signal (after a_weigthing, in dB) for each frame 

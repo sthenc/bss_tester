@@ -9,10 +9,13 @@ detect speech intervals
 
 IN PROGRESS
 
-compute gain values
+compute gain values for targeted SNR
  - only take into account the frames which contain speech
- - 
-
+ - compute the average amplitude of signal (after a_weigthing, in dB) for each frame 
+ - compute the average amplitude over both signals, and the difference (in dB)
+ - deduce the necessary gain value, apply to the signals (taking into account the possibility of overflow)
+ - recheck if result really corresponds to desired SNR
+ 
 TODO:
 
 amplify speech and noise to a standardized amplitude (actually not important because in ASR it will be normalized)
@@ -21,9 +24,7 @@ amplify speech and noise to a standardized amplitude (actually not important bec
 mix at the specified SNR - compute the speech-to-noise ratio using spectrograms and a-weighting,
 and then just mix the signals with a certain amplitude
 
-OPTIONAL:
-
-Do something fancy for multichannel signals. (we want to use mono signals, stereo in the best case)
+Make the code work for stereo signals also (for matKAM).
 
 NOTE:
 

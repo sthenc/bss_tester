@@ -7,9 +7,9 @@ apply a_weighting to spectrograms
 
 IN PROGRESS
 
-TODO:
-
 detect speech intervals 
+
+TODO:
 
 compute gain values
 

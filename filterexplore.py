@@ -18,7 +18,7 @@ Notes:
 The whole drag thing is implemented as follows: when we click on the figure, if we are within a small tolerance of the line, we figure our which point we are on, and set up self.being_dragged with the index of the point. We have some constraints we impose. FOr example, the end points can't be dragged and therefore don't respond to clicks. When we move the mouse pointer, if we are in the middle of a drag, the dragged point is moved and out design_line is redrawn. The drag needs to obey certain constraints to keep the design meaningful. When we release the mouse pointer we call the update_design function to compute and draw the new designed filter
 """
 import matplotlib
-matplotlib.use('macosx')
+#matplotlib.use('macosx')
 import pylab, scipy.signal as ss
 freqz = ss.freqz
 
@@ -75,8 +75,8 @@ class VisualizeFilter:
     self.b = b
     #b = [1,2]; a = [1,2]
     #Print this on command line so we can use it in our programs
-    print 'b = ', pylab.array_repr(b)
-    print 'a = ', pylab.array_repr(a)
+    print('b = ', pylab.array_repr(b))
+    print('a = ', pylab.array_repr(a))
 
     my_w = pylab.logspace(pylab.log10(.1*self.ws[0]), 0.0, num=512)
     #import pdb;pdb.set_trace()

@@ -4,7 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.optimize as opt
 import math
+from math import pi
 from scipy.interpolate import Rbf
+
+from A_weighting import A_weighting
+from scipy.signal import freqz
 
 # points = np.array([(1, 1), (2, 4), (3, 1), (9, 3)])
 
@@ -82,9 +86,19 @@ if __name__ == "__main__":
 	x_new = np.linspace(x[0], x[-1], 32000)
 	#y_new = f(x_new)
 	y2_new = f_log(x_new) # f_log(x_new)
-	plt.plot(x,y,'o', x_new, f2(x_new))
+	
+	b, a = A_weighting(32000)
+	
+	w, h = freqz(b,a,x_new)
+	
+	plt.subplot(211)
+	plt.plot(x,y,'o', x_new * 32000 / (2* pi), f2(x_new))
 	#plt.plot(x,[20*math.log10(t) for t in y],'o', x_new, y2_new)
 	
-	plt.xlim([x[0]-1, x[-1] + 1 ])
+	plt.subplot(212)
+	
+	plt.plot(x,y, 'o', abs(w), abs(h))
+	
+	#plt.xlim([x[0]-1, x[-1] + 1 ])
 	plt.show()
 	

@@ -103,11 +103,11 @@ if __name__ == "__main__":
 	
 	y_out2 = lfilter(b, a, y_out) 
 	
-	show_spectrogram(y1, sr, 2048, nmels, hopl)
-	show_spectrogram(y2, sr, 2048, nmels, hopl)
-	show_spectrogram(y_out, sr, 2048, nmels, hopl)
-	show_spectrogram(y_out, sr, 2048, nmels, hopl, AW=True)
-	show_spectrogram(y_out2, sr, 2048, nmels, hopl)
+	#show_spectrogram(y1, sr, 2048, nmels, hopl)
+	#show_spectrogram(y2, sr, 2048, nmels, hopl)
+	#show_spectrogram(y_out, sr, 2048, nmels, hopl)
+	#show_spectrogram(y_out, sr, 2048, nmels, hopl, AW=True)
+	#show_spectrogram(y_out2, sr, 2048, nmels, hopl)
 	
 	print (y_out)
 	lbr.output.write_wav('output.wav', y_out, sr, normalize=True) # hm ... normalization || !normalization ?

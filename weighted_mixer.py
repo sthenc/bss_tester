@@ -3,6 +3,7 @@
 import numpy as np # no problem
 import librosa as lbr 
 import matplotlib.pyplot as plt
+from scipy.signal import lfilter
 
 import time
 
@@ -49,7 +50,7 @@ def weighted_mixer(y1, y2, sr, nmels, hopl):
 	log_S1 = lbr.logamplitude(S1, ref_power=np.max) + log_aw[:, np.newaxis]
 	log_S2 = lbr.logamplitude(S2, ref_power=np.max) + log_aw[:, np.newaxis]
 
-	log_SA1 = np.average(log_S1, axis=2, )
+	#log_SA1 = np.average(log_S1, axis=2, )
 
 	gain = 0.5
 	
@@ -59,11 +60,25 @@ def weighted_mixer(y1, y2, sr, nmels, hopl):
 	
 	return y_ret
 
-def show_spectrogram(y, sr, n_fft, nmels, hopl):
+def show_spectrogram(y, sr, n_fft, nmels, hopl, AW=False):
 
+
+	
 	S = lbr.feature.melspectrogram(y, sr=sr, n_fft=2048, hop_length=hopl, n_mels=nmels)
 	
 	log_S = lbr.logamplitude(S, ref_power=np.max)
+
+	if AW:
+			
+		# get frequencies for bins	
+		mel_freqs = lbr.mel_frequencies(n_mels=nmels, fmin=0, fmax=sr/2)
+
+		itu_r_468 = itu_r_468_amplitude_weight()
+
+		# compute a_weighting coefficient for every bin
+		log_aw = np.array(itu_r_468(mel_freqs))
+		
+		log_S = log_S + log_aw[:, np.newaxis]
 	
 	lbr.display.specshow(log_S, sr=sr, hop_length=64, x_axis='time', y_axis='mel')
 	
@@ -84,9 +99,16 @@ if __name__ == "__main__":
 	
 	y_out = weighted_mixer(y1, y2, sr, nmels, hopl)
 	
+	b, a = A_weighting(sr)
+	
+	y_out2 = lfilter(b, a, y_out) 
+	
 	show_spectrogram(y1, sr, 2048, nmels, hopl)
 	show_spectrogram(y2, sr, 2048, nmels, hopl)
 	show_spectrogram(y_out, sr, 2048, nmels, hopl)
+	show_spectrogram(y_out, sr, 2048, nmels, hopl, AW=True)
+	show_spectrogram(y_out2, sr, 2048, nmels, hopl)
+	
 	print (y_out)
 	lbr.output.write_wav('output.wav', y_out, sr, normalize=True) # hm ... normalization || !normalization ?
 	

@@ -7,9 +7,13 @@ apply a_weighting to spectrograms
 
 detect speech intervals 
 
+need to filter the signal in time domain, or before log operation
+
 IN PROGRESS
 
-need to filter the signal in time domain, or before log operation
+verifying filter characteristic 
+https://github.com/kghose/neurapy/blob/master/neurapy/signal/filterexplore.py
+http://www.dsprelated.com/showarticle/164.php
 
 compute gain values for targeted SNR
  - only take into account the frames which contain speech

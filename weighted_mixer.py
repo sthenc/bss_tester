@@ -88,6 +88,8 @@ def show_spectrogram(y, sr, n_fft, nmels, hopl, AW=False):
 	
 	plt.show()
 
+	return log_S
+	
 if __name__ == "__main__":	
 	snr = -3
 
@@ -103,27 +105,33 @@ if __name__ == "__main__":
 	
 	y_out2 = lfilter(b, a, y_out) 
 	
+	#yd  = y_out - y_out2
+	
 	#show_spectrogram(y1, sr, 2048, nmels, hopl)
 	#show_spectrogram(y2, sr, 2048, nmels, hopl)
 	#show_spectrogram(y_out, sr, 2048, nmels, hopl)
-	#show_spectrogram(y_out, sr, 2048, nmels, hopl, AW=True)
-	#show_spectrogram(y_out2, sr, 2048, nmels, hopl)
 	
-	print (y_out)
+	log_S1 = show_spectrogram(y_out, sr, 2048, nmels, hopl, AW=True)
+	log_S2 = show_spectrogram(y_out2, sr, 2048, nmels, hopl)
+	
+	
+	#print (y_out)
 	lbr.output.write_wav('output.wav', y_out, sr, normalize=True) # hm ... normalization || !normalization ?
 	
 	
+	log_S = log_S1 - log_S2
+	
 	##lbr.display.specshow(log_S1, sr=sr, hop_length=64, x_axis='time', y_axis='mel')
-	#lbr.display.specshow(log_S1, sr=sr, hop_length=64, x_axis='time', y_axis='mel')
+	lbr.display.specshow(log_S, sr=sr, hop_length=64, x_axis='time', y_axis='mel')
 	##lbr.display.specshow(S1/np.max(S1), sr=sr, hop_length=64, x_axis='time', y_axis='mel')
 
-	#plt.title('mel power spectrogram')
+	plt.title('mel power spectrogram')
 
-	##plt.colorbar(format='%+02.0f dB')
+	plt.colorbar(format='%+02.0f dB')
 
-	#plt.tight_layout()
+	plt.tight_layout()
 
-	#plt.show()
+	plt.show()
 
 	##time.sleep(2000)
 	#alog_S1 = log_S1 + log_aw[:,np.newaxis]

@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import scipy.optimize as opt
 import math
 from math import pi
+from math import log10
 from scipy.interpolate import Rbf
 
 from A_weighting import A_weighting
@@ -89,15 +90,19 @@ if __name__ == "__main__":
 	
 	b, a = A_weighting(32000)
 	
-	w, h = freqz(b,a,x_new)
+	w, h = freqz(b,a, x_new * 2 * pi / 32000)
 	
 	plt.subplot(211)
-	plt.plot(x,y,'o', x_new * 32000 / (2* pi), f2(x_new))
+	plt.plot(x,y,'o', x_new, f2(x_new))
 	#plt.plot(x,[20*math.log10(t) for t in y],'o', x_new, y2_new)
 	
 	plt.subplot(212)
 	
-	plt.plot(x,y, 'o', abs(w), abs(h))
+	#plt.plot(x,y, 'o', abs(w) * (2* pi) / 32000, [10 * log10(abs(t)) for t in h] )
+	
+	#plt.plot(x,y, 'o', abs(w) * (2* pi) / 32000, abs(h) )
+	
+	plt.plot( abs(w) * 32000 / (2* pi) , abs(h) )
 	
 	#plt.xlim([x[0]-1, x[-1] + 1 ])
 	plt.show()

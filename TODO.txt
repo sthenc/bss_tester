@@ -13,6 +13,7 @@ IN PROGRESS
 
 verifying filter characteristic 
 http://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.signal.freqz.html
+-.- http://www.dspguide.com/ch16.htm
 
 compute gain values for targeted SNR
  - only take into account the frames which contain speech

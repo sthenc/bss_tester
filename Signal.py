@@ -17,8 +17,7 @@
 #
 ################################################################################
 
-import librosa as lbr
-
+#import librosa as lbr
 # actually, librosa has everything I need and more...
 
 
@@ -221,8 +220,15 @@ import librosa as lbr
 	##
 	##	step = self._nfft - self._overlap
 		
-	##def iSTFT(self):
-	##	"""Compute iSTFT of the signal in S and store into s"""
+	#def iSTFT(self):
+		#"""Compute iSTFT of the signal in S and store into s"""
+		
+		#self.recomputeWeights()
+
+		#step = self.nfft - self.overlap
+		#pos = 0
+		#self.nFrames = m.ceil(self.sLength / step)
+		
 		
 		
 		

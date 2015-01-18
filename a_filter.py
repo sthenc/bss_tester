@@ -13,6 +13,7 @@ from a_weighting2 import itu_r_468_amplitude_weight
 def a_filter(y, intervals, mode=0):
 	snr = 0
 	
+	print(intervals)
 	
 	if mode == 1:
 	
@@ -20,7 +21,11 @@ def a_filter(y, intervals, mode=0):
 		
 		snr = 20 * math.log10(tmp)
 	
-	else: 
+	elif mode == 0: 
+		
+		
+		
+	else:
 		snr = 0
 	
 

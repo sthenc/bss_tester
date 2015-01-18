@@ -10,6 +10,8 @@ import math
 
 from a_weighting2 import itu_r_468_amplitude_weight
 
+from detect_speech import detect_speech
+
 def a_filter(y, sr, intervals, mode=0):
 	snr = 0
 	
@@ -36,4 +38,13 @@ def a_filter(y, sr, intervals, mode=0):
 
 if __name__ == "__main__":
 	
-		print("hello")
+	y, sr = lbr.load('speech.wav', 16000)
+	
+	nmels = 128
+	hopl = 64
+	
+	intervals = detect_speech(y, sr, hopl, mode=1)
+
+	print("SNR (without A_weighting) = ", a_filter(y, sr, intervals, mode = 1))
+	
+	print("SNR (with A_weighting)    = ", a_filter(y, sr, intervals, mode = 0))

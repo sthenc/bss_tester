@@ -13,8 +13,10 @@ from A_weighting import A_weighting
 
 from detect_speech import detect_speech
 
+from a_filter import a_filter
 
-def weighted_mixer(y1, y2, sr, nmels, hopl):
+
+def weighted_mixer(y1, y2, sr, nmels, hopl, des_snr):
 	"""Mix speech with the noise at the specified SNR
 	
 	Args:
@@ -23,6 +25,7 @@ def weighted_mixer(y1, y2, sr, nmels, hopl):
 		sr - samplerate
 		nmels - number of mel bins
 		hopl - hop lenght
+		des_snr - desired SNR of speech to noise
 		
 	Returns:
 	
@@ -34,25 +37,28 @@ def weighted_mixer(y1, y2, sr, nmels, hopl):
 
 	intervals = detect_speech(y1, sr, hopl)
 
-	# compute mel spectrogram
-	S1 = lbr.feature.melspectrogram(y1, sr=sr, n_fft=2048, hop_length=hopl, n_mels=nmels)
-	S2 = lbr.feature.melspectrogram(y2, sr=sr, n_fft=2048, hop_length=hopl, n_mels=nmels)
+	## compute mel spectrogram
+	#S1 = lbr.feature.melspectrogram(y1, sr=sr, n_fft=2048, hop_length=hopl, n_mels=nmels)
+	#S2 = lbr.feature.melspectrogram(y2, sr=sr, n_fft=2048, hop_length=hopl, n_mels=nmels)
 
-	# get frequencies for bins	
-	mel_freqs = lbr.mel_frequencies(n_mels=nmels, fmin=0, fmax=sr/2)
+	## get frequencies for bins	
+	#mel_freqs = lbr.mel_frequencies(n_mels=nmels, fmin=0, fmax=sr/2)
 
-	itu_r_468 = itu_r_468_amplitude_weight()
+	#itu_r_468 = itu_r_468_amplitude_weight()
 
-	# compute a_weighting coefficient for every bin
-	log_aw = np.array(itu_r_468(mel_freqs))
+	## compute a_weighting coefficient for every bin
+	#log_aw = np.array(itu_r_468(mel_freqs))
 
-	# compute logarithm of amplitude and apply itu-r 468 a_weighting
-	log_S1 = lbr.logamplitude(S1, ref_power=np.max) + log_aw[:, np.newaxis]
-	log_S2 = lbr.logamplitude(S2, ref_power=np.max) + log_aw[:, np.newaxis]
+	## compute logarithm of amplitude and apply itu-r 468 a_weighting
+	#log_S1 = lbr.logamplitude(S1, ref_power=np.max) + log_aw[:, np.newaxis]
+	#log_S2 = lbr.logamplitude(S2, ref_power=np.max) + log_aw[:, np.newaxis]
 
-	#log_SA1 = np.average(log_S1, axis=2, )
+	##log_SA1 = np.average(log_S1, axis=2, )
 
-	gain = 0.5
+	snr1 = a_filter(y1, intervals, mode=1)
+	snr2 = a_filter(y1, intervals, mode=1)
+
+	gain = 10**((snr2 - snr1 - des_snr)/20) # from amplitude dB to gain
 	
 	len_ret = min(len(y1), len(y2))
 	
@@ -99,19 +105,19 @@ if __name__ == "__main__":
 	nmels = 128
 	hopl = 64
 	
-	y_out = weighted_mixer(y1, y2, sr, nmels, hopl)
+	y_out = weighted_mixer(y1, y2, sr, nmels, hopl, 9)
 	
-	b, a = A_weighting(sr)
+	#b, a = A_weighting(sr)
 	
-	y_out2 = lfilter(b, a, y_out) 
+	#y_out2 = lfilter(b, a, y_out) 
 	
 	
 	
 	#yd  = y_out - y_out2
 	
-	#show_spectrogram(y1, sr, 2048, nmels, hopl)
-	#show_spectrogram(y2, sr, 2048, nmels, hopl)
-	#show_spectrogram(y_out, sr, 2048, nmels, hopl)
+	show_spectrogram(y1, sr, 2048, nmels, hopl)
+	show_spectrogram(y2, sr, 2048, nmels, hopl)
+	show_spectrogram(y_out, sr, 2048, nmels, hopl)
 	
 	#log_S1 = show_spectrogram(y_out, sr, 2048, nmels, hopl, AW=True)
 	#log_S2 = show_spectrogram(y_out2, sr, 2048, nmels, hopl)

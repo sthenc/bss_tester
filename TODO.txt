@@ -9,11 +9,14 @@ detect speech intervals
 
 need to filter the signal in time domain, or before log operation
 
-IN PROGRESS
 
-verifying filter characteristic 
+Researching DSP
 http://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.signal.freqz.html
 -.- http://www.dspguide.com/ch16.htm
+
+IN PROGRESS
+
+verifying filter characteristic - or create and test filter in frequency domain
 
 compute gain values for targeted SNR
  - only take into account the frames which contain speech

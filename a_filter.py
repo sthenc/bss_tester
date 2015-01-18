@@ -10,8 +10,10 @@ import math
 
 from a_weighting2 import itu_r_468_amplitude_weight
 
-def a_filter(y, intervals, mode=0):
+def a_filter(y, sr, intervals, mode=0):
 	snr = 0
+	
+	itur468 = itu_r_468_amplitude_weight
 	
 	print(intervals)
 	
@@ -23,10 +25,15 @@ def a_filter(y, intervals, mode=0):
 	
 	elif mode == 0: 
 		
-		
+		tmp = 2
+		snr = -1
 		
 	else:
 		snr = 0
 	
 
 	return snr
+
+if __name__ == "__main__":
+	
+		print("hello")

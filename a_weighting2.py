@@ -77,16 +77,19 @@ def f_log(x):
 	#return []
 	return [20*math.log10(f2(i)) for i in x]
 
-def itu_r_468_amplitude_weight():
+def itu_r_468_amplitude_weight_dB():
 	return f_log
+
+def itu_r_468_amplitude_weight():
+	return f2	
 
 if __name__ == "__main__":
 
-	f_log = itu_r_468_amplitude_weight()
+	f_log2 = itu_r_468_amplitude_weight_dB()
 	# calculate new x's and y's
 	x_new = np.linspace(x[0], x[-1], 32000)
 	#y_new = f(x_new)
-	y2_new = f_log(x_new) # f_log(x_new)
+	y2_new = f_log2(x_new) # f_log(x_new)
 	
 	b, a = A_weighting(32000)
 	
@@ -98,12 +101,14 @@ if __name__ == "__main__":
 	
 	plt.subplot(212)
 	
-	#plt.plot(x,y, 'o', abs(w) * (2* pi) / 32000, [10 * log10(abs(t)) for t in h] )
+	##plt.plot(x,y, 'o', abs(w) * (2* pi) / 32000, [10 * log10(abs(t)) for t in h] )
 	
-	#plt.plot(x,y, 'o', abs(w) * (2* pi) / 32000, abs(h) )
+	##plt.plot(x,y, 'o', abs(w) * (2* pi) / 32000, abs(h) )
 	
-	plt.plot( abs(w) * 32000 / (2* pi) , abs(h) )
+	#plt.plot( abs(w) * 32000 / (2* pi) , abs(h) )
 	
-	#plt.xlim([x[0]-1, x[-1] + 1 ])
+	plt.plot(x, points[:,1], 'o', x_new, y2_new)
+	
+	##plt.xlim([x[0]-1, x[-1] + 1 ])
 	plt.show()
 	

@@ -7,7 +7,7 @@ from scipy.signal import lfilter, freqz
 
 import time
 
-from a_weighting2 import itu_r_468_amplitude_weight
+from a_weighting2 import itu_r_468_amplitude_weight_dB
 
 from A_weighting import A_weighting
 
@@ -35,7 +35,7 @@ def weighted_mixer(y1, y2, sr, nmels, hopl, des_snr):
 		doesn't work with stereo yet
 	"""
 
-	intervals = detect_speech(y1, sr, hopl)
+	intervals = detect_speech(y1, sr, hopl, mode=1)
 
 	## compute mel spectrogram
 	#S1 = lbr.feature.melspectrogram(y1, sr=sr, n_fft=2048, hop_length=hopl, n_mels=nmels)
@@ -55,8 +55,8 @@ def weighted_mixer(y1, y2, sr, nmels, hopl, des_snr):
 
 	##log_SA1 = np.average(log_S1, axis=2, )
 
-	snr1 = a_filter(y1, intervals, mode=1)
-	snr2 = a_filter(y1, intervals, mode=1)
+	snr1 = a_filter(y1, sr, intervals, mode=1)
+	snr2 = a_filter(y1, sr, intervals, mode=1)
 
 	gain = 10**((snr2 - snr1 - des_snr)/20) # from amplitude dB to gain
 	
@@ -79,7 +79,7 @@ def show_spectrogram(y, sr, n_fft, nmels, hopl, AW=False):
 		# get frequencies for bins	
 		mel_freqs = lbr.mel_frequencies(n_mels=nmels, fmin=0, fmax=sr/2)
 
-		itu_r_468 = itu_r_468_amplitude_weight()
+		itu_r_468 = itu_r_468_amplitude_weight_dB()
 
 		# compute a_weighting coefficient for every bin
 		log_aw = np.array(itu_r_468(mel_freqs))

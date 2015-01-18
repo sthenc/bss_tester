@@ -6,7 +6,7 @@ import math
 
 # works only on very clean speech like audiobooks
 # returns list of tuples (#begining window, #ending window)
-def detect_speech(y, sr, window=-1): # window = mel_bins /2 because of 50% overlap
+def detect_speech(y, sr, window=-1, mode=0): # window = mel_bins /2 because of 50% overlap
 
 	#segment signal into frames of approx 10 ms
 	if window==-1:
@@ -68,7 +68,10 @@ def detect_speech(y, sr, window=-1): # window = mel_bins /2 because of 50% overl
 		else:
 			if brojac == 1:		
 				end = i
-				tmp = (start*1.0, end*1.0)
+				if mode == 0:
+					tmp = (start*1.0, end*1.0)
+				else: 
+					tmp = (round(start*1.0*window), round(end*1.0*window))
 				intervals.append(tmp)
 				brojac = 0
 			

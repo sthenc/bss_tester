@@ -23,11 +23,16 @@ def a_filter(y, sr, intervals, mode=0):
 	
 		tmp = np.average(abs(y))
 		
+		print(tmp)
 		snr = 20 * math.log10(tmp)
 	
 	elif mode == 0: 
 		
-		tmp = 2
+		tmpylen = sum([ i[1] - i[0] for i in intervals])
+		
+		print(tmpylen)
+		tmp = np.zeros(tmpylen)
+		
 		snr = -1
 		
 	else:

@@ -34,9 +34,9 @@ generate short audio segments with approximate transcripts
 
 Make the code work for stereo signals also (for matKAM).
 
-IN PROGRESS
-
 noise segmenter
+
+IN PROGRESS
 
 automatic mixing
  

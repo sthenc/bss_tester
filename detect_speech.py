@@ -14,14 +14,15 @@ def detect_speech(y, sr, window=-1, mode=0): # window = mel_bins /2 because of 5
 	
 #	print(y, sr, window)
 	
-	N = math.ceil(len(y) / window)
+	N = round(math.ceil(len(y) / window))
 	
 	data = np.resize(np.array(y), (N, window))
 
-#	print(N, data)
+	#print(N, data)
 	
 	amplitude = np.zeros(N)
 	
+	N = int(round(N))
 	for i in range(0, N):
 		amplitude[i] = sum(abs(data[i])) / window
 		

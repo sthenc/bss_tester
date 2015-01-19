@@ -29,11 +29,10 @@ and then just mix the signals with a certain amplitude
 amplify speech and noise to a standardized amplitude (actually not important because in ASR it will be normalized)
 - should ntentionally randomize this to train the network to be robust to signal level differences (MAYBE LATER)
 
-IN PROGRESS
-
 brutal idea - mine speech samples from online audio books, and automatically
 generate short audio segments with approximate transcripts 
 
+IN PROGRESS
 
 Make the code work for stereo signals also (for matKAM).
  

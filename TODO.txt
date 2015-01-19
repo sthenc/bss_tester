@@ -14,8 +14,6 @@ Researching DSP
 http://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.signal.freqz.html
 -.- http://www.dspguide.com/ch16.htm
 
-IN PROGRESS
-
 verifying filter characteristic - or create and test filter in frequency domain
 
 compute gain values for targeted SNR
@@ -24,14 +22,17 @@ compute gain values for targeted SNR
  - compute the average amplitude over both signals, and the difference (in dB)
  - deduce the necessary gain value, apply to the signals (taking into account the possibility of overflow)
  - recheck if result really corresponds to desired SNR
- 
-TODO:
-
-amplify speech and noise to a standardized amplitude (actually not important because in ASR it will be normalized)
-- should ntentionally randomize this to train the network to be robust to signal level differences
 
 mix at the specified SNR - compute the speech-to-noise ratio using spectrograms and a-weighting,
 and then just mix the signals with a certain amplitude
+
+amplify speech and noise to a standardized amplitude (actually not important because in ASR it will be normalized)
+- should ntentionally randomize this to train the network to be robust to signal level differences (MAYBE LATER)
+
+IN PROGRESS
+
+ 
+TODO:
 
 Make the code work for stereo signals also (for matKAM).
 

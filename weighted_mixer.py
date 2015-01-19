@@ -16,7 +16,7 @@ from detect_speech import detect_speech
 from a_filter import a_filter
 
 
-def weighted_mixer(y1, y2, sr, nmels, hopl, des_snr):
+def weighted_mixer(y1, y2, sr, nmels, hopl, des_snr, AW=True):
 	"""Mix speech with the noise at the specified SNR
 	
 	Args:
@@ -55,8 +55,16 @@ def weighted_mixer(y1, y2, sr, nmels, hopl, des_snr):
 
 	##log_SA1 = np.average(log_S1, axis=2, )
 
-	snr1 = a_filter(y1, sr, intervals, mode=1)
-	snr2 = a_filter(y1, sr, intervals, mode=1)
+	if AW == True:
+		print("Using A weighting")
+		snr1 = a_filter(y1, sr, intervals, mode=0) # use A weighting mode
+		snr2 = a_filter(y2, sr, intervals, mode=0) 
+	else:
+		print("Not using A weighting")
+		snr1 = a_filter(y1, sr, intervals, mode=1)
+		snr2 = a_filter(y2, sr, intervals, mode=1) # don't use weighting
+		
+	print("Applying gain for %.2f dB" % (snr2 - snr1 - des_snr))
 
 	gain = 10**((snr2 - snr1 - des_snr)/20) # from amplitude dB to gain
 	
@@ -100,54 +108,24 @@ if __name__ == "__main__":
 	snr = -3
 
 	y1, sr = lbr.load('speech.wav', 16000)
-	y2, sr = lbr.load('noise.wav', 16000) # have to guess samplerate, otherwise the code might hang
+	y2, sr = lbr.load('noise_lf.wav', 16000) # have to guess samplerate, otherwise the code might hang
 	
 	nmels = 128
 	hopl = 64
 	
-	y_out = weighted_mixer(y1, y2, sr, nmels, hopl, 9)
+	y_out = weighted_mixer(y1, y2, sr, nmels, hopl, -9, AW=True)
 	
-	#b, a = A_weighting(sr)
-	
-	#y_out2 = lfilter(b, a, y_out) 
-	
-	
-	
-	#yd  = y_out - y_out2
-	
-	show_spectrogram(y1, sr, 2048, nmels, hopl)
-	show_spectrogram(y2, sr, 2048, nmels, hopl)
-	show_spectrogram(y_out, sr, 2048, nmels, hopl)
-	
-	#log_S1 = show_spectrogram(y_out, sr, 2048, nmels, hopl, AW=True)
-	#log_S2 = show_spectrogram(y_out2, sr, 2048, nmels, hopl)
-	
-	
-	#print (y_out)
 	lbr.output.write_wav('output.wav', y_out, sr, normalize=True) # hm ... normalization || !normalization ?
+		
+	#show_spectrogram(y1, sr, 2048, nmels, hopl)
+	#show_spectrogram(y2, sr, 2048, nmels, hopl)
+	#show_spectrogram(y_out, sr, 2048, nmels, hopl)
+
+
+	y_out = weighted_mixer(y1, y2, sr, nmels, hopl, -9, AW=False)
 	
-	
-	#log_S = log_S1 - log_S2
-	
-	##lbr.display.specshow(log_S1, sr=sr, hop_length=64, x_axis='time', y_axis='mel')
-	#lbr.display.specshow(log_S, sr=sr, hop_length=64, x_axis='time', y_axis='mel')
-	##lbr.display.specshow(S1/np.max(S1), sr=sr, hop_length=64, x_axis='time', y_axis='mel')
-
-	# plt.title('mel power spectrogram')
-
-	# plt.colorbar(format='%+02.0f dB')
-
-	# plt.tight_layout()
-
-	# plt.show()
-
-	##time.sleep(2000)
-	#alog_S1 = log_S1 + log_aw[:,np.newaxis]
-
-	#lbr.display.specshow(alog_S1, sr=sr, hop_length=64, x_axis='time', y_axis='mel')
-
-	#plt.title('mel power spectrogram itu-r 468')
-
-	#plt.tight_layout()
-
-	#plt.show()
+	lbr.output.write_wav('output_NA.wav', y_out, sr, normalize=True) # hm ... normalization || !normalization ?
+		
+	#show_spectrogram(y1, sr, 2048, nmels, hopl)
+	#show_spectrogram(y2, sr, 2048, nmels, hopl)
+	#show_spectrogram(y_out, sr, 2048, nmels, hopl)

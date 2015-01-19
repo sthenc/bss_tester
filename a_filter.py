@@ -113,7 +113,7 @@ def a_filter(y, sr, intervals, mode=0):
 
 if __name__ == "__main__":
 	
-	y, sr = lbr.load('noise.wav', 16000)
+	y, sr = lbr.load('noise_lf.wav', 16000)
 	
 	nmels = 128
 	hopl = 64

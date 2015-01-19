@@ -36,10 +36,12 @@ TODO:
 
 Make the code work for stereo signals also (for matKAM).
 
-NOTE:
-
 brutal idea - mine speech samples from online audio books, and automatically
 generate short audio segments with approximate transcripts 
+
+automate testing
+
+FUTURE:
 
 once done, try out currennt
 

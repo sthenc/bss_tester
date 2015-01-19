@@ -41,6 +41,7 @@ generate short audio segments with approximate transcripts
 
 automate testing
 
+results & presentation
 FUTURE:
 
 once done, try out currennt

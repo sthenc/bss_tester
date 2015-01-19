@@ -32,15 +32,14 @@ amplify speech and noise to a standardized amplitude (actually not important bec
 brutal idea - mine speech samples from online audio books, and automatically
 generate short audio segments with approximate transcripts 
 
+Make the code work for stereo signals also (for matKAM).
+
+
 IN PROGRESS
 
-Make the code work for stereo signals also (for matKAM).
+automate testing
  
 TODO:
-
-
-
-automate testing
 
 results & presentation
 FUTURE:

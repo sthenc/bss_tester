@@ -26,7 +26,7 @@ def detect_speech(y, sr, window=-1, mode=0): # window = mel_bins /2 because of 5
 	for i in range(0, N):
 		amplitude[i] = sum(abs(data[i])) / window
 		
-	avgamp = sum(amplitude) / N
+	avgamp = sum(amplitude) / (1.0 * N)
 
 	treshold = avgamp * 0.57
 

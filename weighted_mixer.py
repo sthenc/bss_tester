@@ -148,7 +148,7 @@ if __name__ == "__main__":
 	#show_spectrogram(y_out, sr, 2048, nmels, hopl)
 
 
-	y_out = weighted_mixer(y1, y2, sr, nmels, hopl, -9, AW=False)
+	y_out = weighted_mixer_stereo(y1, y2, sr, nmels, hopl, -9, AW=False)
 	
 	lbr.output.write_wav('output_NA.wav', y_out.T, sr, normalize=True) # hm ... normalization || !normalization ?
 		

@@ -34,14 +34,17 @@ generate short audio segments with approximate transcripts
 
 Make the code work for stereo signals also (for matKAM).
 
-
 IN PROGRESS
+
+automatic mixing
  
-automate testing
- 
+fix alignment
 TODO:
 
 results & presentation
+
+automate testing
+
 FUTURE:
 
 once done, try out currennt

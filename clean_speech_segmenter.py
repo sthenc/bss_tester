@@ -75,7 +75,9 @@ for name in input_names:
 
 	#print(transkripti)
 
-	y, sr = lbr.load(input_wav, 16000)
+	y, sr = lbr.load(input_wav, mono=False, sr=16000)
+	
+	y = y.T
 
 	for i in range(len(transkripti)):
 		
@@ -89,6 +91,7 @@ for name in input_names:
 		
 		f.close()
 		
+		print("Generated %d file" % N_out)
+		
 		N_out += 1
 		
-		print("Generated %d file" % N_out)

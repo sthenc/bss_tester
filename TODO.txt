@@ -37,15 +37,18 @@ Make the code work for stereo signals also (for matKAM).
 noise segmenter
 
 automatic mixing
-IN PROGRESS
+
 
 separating
  
 fix alignment
 
-TODO:
+IN PROGRESS
 
 results
+
+TODO:
+
 presentation
 
 automate testing

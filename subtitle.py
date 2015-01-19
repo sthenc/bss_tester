@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 #
 # stjepan.henc@fer.hr
@@ -117,7 +117,12 @@ class SrtSubtitle(Subtitle):
 		
 	def __str__(self):
 
-		return str(self.subs[i].start) + " --> " + str(self.subs[i].end) + "\n" + self.subs[i].text
+		ret = ""
+		
+		for i in range(len(self.subs)):
+			ret = ret + str(self.subs[i].start) + " --> " + str(self.subs[i].end) + "\n" + self.subs[i].text + "\n"
+		
+		return ret
 			
 	def procitaj_timecode(self, code):
 		tmp = code.strip().split(":")
@@ -171,7 +176,9 @@ class SrtSubtitle(Subtitle):
 		#   prazna linija
 		
 		linije = fajl.readlines()
-		linije.append("\n") # algoritam pretpostavlja da titl zavrsava s praznom linijom
+		while not linije[-1].strip():
+			linije.pop()
+		linije.append("\n") # algoritam pretpostavlja da titl zavrsava s tocno 1 praznom linijom
 		bafer = []
 		
 		for i in range(0, len(linije)):
@@ -184,7 +191,7 @@ class SrtSubtitle(Subtitle):
 
 				text = ""
 				for j in range(2, len(bafer)):
-					text += bafer[j] + "\n"
+					text += bafer[j].strip() + "\n"
 				
 				self.subs.append(SubtitleLine(start, end, text))
 				bafer = []

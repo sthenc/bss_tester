@@ -49,6 +49,8 @@ results
 
 TODO:
 
+- find some room impulse response and apply it to the signals ? 
+
 presentation
 
 automate testing
